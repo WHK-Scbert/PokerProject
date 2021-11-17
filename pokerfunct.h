@@ -63,7 +63,7 @@ void registerPlayer(char filename[], Player player);
 
 void updateBalance(char filename[], int newBalance, Player* playerJ);
 
-void RunSim(int handRank, vector* deck, int* deckSize, int turnPlayed);
+void RunSim(int handRank, vector* deck, int deckSize, int turnPlayed);
 
 
 

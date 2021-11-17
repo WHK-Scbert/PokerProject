@@ -245,7 +245,7 @@ int checkHand(Card card1, Card card2, Card card3, Card card4, Card card5)
         {
             if (pairsCheckArray[i].trueValue == pairsCheckArray[i + 1].trueValue)
             {
-                if (pairsCheckArray[i].trueValue >= 10)
+                if (pairsCheckArray[i].trueValue >= 10 || pairsCheckArray[i].trueValue == 1)
                 {
                     isJack = true;
                 }
@@ -309,7 +309,7 @@ void printHandRank(int handRank)
         printf("One pair");
         break;
     case 8:
-        printf("Two pair");
+        printf("Two pairs");
         break;
     case 9:
         printf("Jack or higher");
@@ -439,7 +439,7 @@ void updateBalance(char filename[], int newBalance, Player* player){
     fclose(fp);
 }
 
-void RunSim(int handRank, vector* deck, int* deckSize, int turnPlayed)
+void RunSim(int handRank, vector* deck, int deckSize, int turnPlayed)
 {
     Card *cards;
     cards = (Card *)malloc(5 * sizeof(Card));
@@ -447,7 +447,7 @@ void RunSim(int handRank, vector* deck, int* deckSize, int turnPlayed)
     {
         //int dealingCard = deal(&deck, &deckSize);
         //cards[i] = cardChecks(dealingCard);
-        cards[i] = realDealCard(deck, deckSize);
+        cards[i] = realDealCard(deck, &deckSize);
     }
     printf("Hand %d: %c %s, %c %s, %c %s, %c %s, %c %s\n", turnPlayed, cards[0].value, cards[0].suiteSpellOut, cards[1].value, cards[1].suiteSpellOut, cards[2].value, cards[2].suiteSpellOut, cards[3].value, cards[3].suiteSpellOut, cards[4].value, cards[4].suiteSpellOut);
     if(handRank == checkHand(cards[0], cards[1], cards[2], cards[3], cards[4])) //base case
@@ -457,7 +457,7 @@ void RunSim(int handRank, vector* deck, int* deckSize, int turnPlayed)
     }else{
         
         vector_resize(deck, 0);
-        *deckSize = 52;
+        deckSize = 52;
         for (unsigned int i = 0; i < 52; i++)
         {
             vector_insert(deck, i, i);

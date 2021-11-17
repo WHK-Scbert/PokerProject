@@ -11,6 +11,7 @@
 int main()
 {
     srand(time(NULL));
+    
     /*
     int* decks = NULL;
     decks = (int*)malloc(sizeof(int) * 52);
@@ -74,7 +75,7 @@ int main()
         vector_insert(&deck, i, i);
         //printf("%d\n", *vector_at(&deck,i));
     }
-    
+
     printf("*****Welcome to USAFA Video Poker*****\n");
     printf("Please Enter Your Cadet Reward Number: \n");
     int memberNumber = 0;
@@ -84,7 +85,6 @@ int main()
     if (CheckRecord("namelist.txt", memberNumber, &player))
     {
         printf("You are all set. Enjoy !\n");
-        
     }
     else
     {
@@ -101,19 +101,19 @@ int main()
             scanf("%s", first);
             printf("Please Enter Your Last Name: ");
             scanf("%s", last);
-            strcat(first," ");
-            strcat(first,last);
+            strcat(first, " ");
+            strcat(first, last);
             strcpy(newPlayer.names, first);
             printf("Please Enter Your Age: ");
             scanf("%d", &newPlayer.age);
             printf("How much money you want to buy in: ");
             scanf("%d", &newPlayer.balance);
-            int num1 = (rand()%10) * 10000;
-            int num2 = (rand()%10) * 1000;
-            int num3 = (rand()%10) * 100;
-            int num4 = (rand()%10) * 10;
-            int num5 = (rand()%10) * 1;
-            newPlayer.memberNumber = num1+num2+num3+num4+num5;
+            int num1 = (rand() % 10) * 10000;
+            int num2 = (rand() % 10) * 1000;
+            int num3 = (rand() % 10) * 100;
+            int num4 = (rand() % 10) * 10;
+            int num5 = (rand() % 10) * 1;
+            newPlayer.memberNumber = num1 + num2 + num3 + num4 + num5;
             printf("Your Cadet Reward Number is : %d\n", newPlayer.memberNumber);
             registerPlayer("namelist.txt", newPlayer);
             printf("You are all set.\n");
@@ -124,7 +124,7 @@ int main()
             break;
         }
     }
-    
+
     //Player player;
     //player.balance = 2000;
     printf("Pick one of the following options: 1. Player Video Poker 2. Run simulation\n");
@@ -136,6 +136,14 @@ int main()
         bool stop = false;
         while (!stop)
         {
+            deckSize = 52;
+            vector_destroy(&deck);
+            vector_create(&deck, 0); //Renew the deck
+            for (unsigned int i = 0; i < 52; i++)
+            {
+                vector_insert(&deck, i, i);
+                //printf("%d\n", *vector_at(&deck,i));
+            }
             printf("You have %d $ right now. Do you want to buy in more? [Y/N] : ", player.balance);
             char decision;
             int money;
@@ -167,8 +175,9 @@ int main()
             printf("How many cards you want to change: ");
             int numChange = 0;
             scanf("%d", &numChange);
-            
-            for(int i=0; i<numChange; i++){
+
+            for (int i = 0; i < numChange; i++)
+            {
                 int index;
                 printf("Enter the index of the card one at a time: ");
                 scanf("%d", &index);
@@ -185,19 +194,22 @@ int main()
             printf("Do you want to continue? [Y/N]: ");
             char Again;
             scanf(" %c", &Again);
-            switch(Again){
-                case 'N':
-                    stop = true;
-                    printf("\nUpdating your balance");
-                    for(int i=0; i<5; i++){
-                        printf("*");
-                        sleep(0.0001);
-                    }
-                    updateBalance("namelist.txt",player.balance,&player);
+            switch (Again)
+            {
+            case 'N':
+                stop = true;
+                printf("\nUpdating your balance");
+                for (int i = 0; i < 5; i++)
+                {
+                    printf("*");
+                    sleep(0.0001);
+                }
+                printf("\n");
+                updateBalance("namelist.txt", player.balance, &player);
 
-                    break;
-                default:
-                    break;
+                break;
+            default:
+                break;
             }
         }
     }
@@ -208,23 +220,22 @@ int main()
         printf("Enter you desired hand rank to run the sim: ");
         int handRank = 0;
         scanf("%d", &handRank);
-        RunSim(handRank,&deck, &deckSize, 1);
-
+        RunSim(handRank, &deck, deckSize, 1);
     }
-    
-   //Test deal
-   
-//     vector deck;
-//     vector_create(&deck, 0);
-//     int deckSize = 52;
-//     for(unsigned int i =0; i<52; i++){
-//         vector_insert(&deck, i, i);
-//         //printf("%d\n", *vector_at(&deck,i));
-//     }
-   
-//    for(int i=0; i< 10; i++){
-//        Card play = realDealCard(&deck, &deckSize);
-//        printf("%c %c\n", play.value, play.suite);
-//    }
+
+    //Test deal
+
+    //     vector deck;
+    //     vector_create(&deck, 0);
+    //     int deckSize = 52;
+    //     for(unsigned int i =0; i<52; i++){
+    //         vector_insert(&deck, i, i);
+    //         //printf("%d\n", *vector_at(&deck,i));
+    //     }
+
+    //    for(int i=0; i< 10; i++){
+    //        Card play = realDealCard(&deck, &deckSize);
+    //        printf("%c %c\n", play.value, play.suite);
+    //    }
     return 0;
 }
