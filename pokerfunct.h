@@ -57,7 +57,7 @@ int checkPayout(int handRank, int bet); //Payout rate according to Las Vegas Str
 
 bool CheckRecord(char filename[], int MemberNumber, Player* playerJ);
 
-Player pullPlayer(int number);
+//Player pullPlayer(int number);
 
 void registerPlayer(char filename[], Player player);
 
