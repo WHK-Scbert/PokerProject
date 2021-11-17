@@ -428,7 +428,11 @@ void updateBalance(char filename[], int newBalance, Player* player){
         index++;
         }
     }
-    fseek(fp,sizeof(Player) * index,SEEK_SET);
+    fseek(fp,0,SEEK_SET);
+    Player trash;
+    for(int i=0; i<index; i++){
+    fscanf(fp,"%d,%[^,],%d,%d,%d\n",&trash.memberNumber,trash.names, &trash.age, &trash.balance, &trash.points);
+    }
     fprintf(fp,"%5d,%s,%d,%d,%d\n", player->memberNumber,player->names, player->age, player->balance, player->points);
 
     
