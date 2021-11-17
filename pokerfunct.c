@@ -1,8 +1,8 @@
 /** Poker.h
  * =========================================================== 
  * Name: Chanon Mallanoo
- * Section: M6
- * Project: Poker
+ * Section: T1
+ * Project: Video Poker
  * Purpose: Create a simple video poker game
  
  **/
