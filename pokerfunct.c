@@ -367,11 +367,6 @@ int deal(vector *decks, int *deckSize)
     //random a card
 
     int card = rand() % *deckSize;
-
-    //update the deck
-    //printf("%d\n", *vector_at(decks,card));
-    //vector_erase(decks, card);
-    //printf("%d\n", *vector_at(decks,card));
     *deckSize -= 1;
 
     return card;
@@ -388,9 +383,57 @@ Card realDealCard(vector *deck, int *deckSize)
     return tester;
 }
 
-bool CheckRecord(char filename[], int MemberNumber);
+bool CheckRecord(char filename[], int MemberNumber, Player* playerJ){
+    FILE* fp = fopen(filename, "r");
+    //Format MemberNumber,Name,Age,Balance,Points
+    //Player playerJ;
+    bool stop = false;
+    while(!feof(fp) && !stop){
+        fscanf(fp,"%d,%[^,],%d,%d,%d",&playerJ->memberNumber,playerJ->names, &playerJ->age, &playerJ->balance, &playerJ->points);
+        if(playerJ->memberNumber == MemberNumber){
+            stop = true;
+            return true;
+        }
+    }
+    return false;
+    
 
-int registerPlayer(char filename[], Player player);
+    
+    fclose(fp);
+}
+
+
+void registerPlayer(char filename[], Player player){
+    FILE* fp = fopen(filename, "a");
+    //Format MemberNumber,Name,Age,Balance,Points
+    
+    fprintf(fp,"%5d,%s,%d,%d,%d\n", player.memberNumber, player.names, player.age, player.balance, player.points);
+
+    
+    fclose(fp);
+}
+
+void updateBalance(char filename[], int newBalance, Player* player){
+    FILE* fp = fopen(filename, "r+");
+    player ->balance = newBalance;
+    Player* playerJ = (Player*)malloc(sizeof(Player));
+    bool stop = false;
+    int index = 0;
+    while(!feof(fp) && !stop){
+        fscanf(fp,"%d,%[^,],%d,%d,%d",&playerJ->memberNumber,playerJ->names, &playerJ->age, &playerJ->balance, &playerJ->points);
+        if(playerJ->memberNumber == player->memberNumber){
+            stop = true;
+            
+        }else{
+        index++;
+        }
+    }
+    fseek(fp,sizeof(Player) * index,SEEK_SET);
+    fprintf(fp,"%5d,%s,%d,%d,%d\n", player->memberNumber,player->names, player->age, player->balance, player->points);
+
+    
+    fclose(fp);
+}
 
 void RunSim(int handRank, vector* deck, int* deckSize, int turnPlayed)
 {

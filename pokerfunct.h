@@ -16,6 +16,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include <unistd.h>
 // struct and typedef declaration for Vector ADT
 typedef struct vector_struct {
     int* elements;
@@ -33,11 +34,11 @@ typedef struct
 Card cardChecks(int card); //Make a card code becomes a card
 void UpdateBankroll(int* bankroll, int amount); 
 int deal(vector* decks, int* deckSize);
-Card realDealCard(vector *deck, int *deckSize);
+Card realDealCard(vector *deck, int *deckSize); //Deal and get rid of the dealt card from the deck
 typedef struct 
 {
-    char names[20];
     int memberNumber;
+    char names[20];
     int age;
     int balance;
     int points;
@@ -54,11 +55,13 @@ void printHandRank(int handRank); //Print whether the player get pairs/ twopairs
 
 int checkPayout(int handRank, int bet); //Payout rate according to Las Vegas Strip
 
-bool CheckRecord(char filename[], int number);
+bool CheckRecord(char filename[], int MemberNumber, Player* playerJ);
 
 Player pullPlayer(int number);
 
-int registerPlayer(char filename[], Player player);
+void registerPlayer(char filename[], Player player);
+
+void updateBalance(char filename[], int newBalance, Player* playerJ);
 
 void RunSim(int handRank, vector* deck, int* deckSize, int turnPlayed);
 

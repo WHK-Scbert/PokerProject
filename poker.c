@@ -74,46 +74,59 @@ int main()
         vector_insert(&deck, i, i);
         //printf("%d\n", *vector_at(&deck,i));
     }
-    /*
+    
     printf("*****Welcome to USAFA Video Poker*****\n");
     printf("Please Enter Your Cadet Reward Number: \n");
     int memberNumber = 0;
     Player newPlayer;
     Player player;
     scanf("%d", &memberNumber);
-    if (CheckRecord("namelist.txt", memberNumber))
+    if (CheckRecord("namelist.txt", memberNumber, &player))
     {
         printf("You are all set. Enjoy !\n");
-        player = pullPlayer(memberNumber);
+        
     }
     else
     {
         printf("You are not in the system right now. Do you want to apply for Cadet Reward membership [Y/N]: \n");
         char decision;
         scanf(" %c", &decision);
+        char first[10];
+        char last[10];
         switch (decision)
         {
         case 'Y':
 
-            printf("Please Enter Your Name: ");
-            scanf("%[^\n]%*c", newPlayer.names);
+            printf("Please Enter Your First Name: ");
+            scanf("%s", first);
+            printf("Please Enter Your Last Name: ");
+            scanf("%s", last);
+            strcat(first," ");
+            strcat(first,last);
+            strcpy(newPlayer.names, first);
             printf("Please Enter Your Age: ");
             scanf("%d", &newPlayer.age);
             printf("How much money you want to buy in: ");
             scanf("%d", &newPlayer.balance);
-            newPlayer.memberNumber = 111111;
-            printf("Your Cadet Reward Number is : %d", newPlayer.memberNumber);
-            printf("You are all set.");
+            int num1 = (rand()%10) * 10000;
+            int num2 = (rand()%10) * 1000;
+            int num3 = (rand()%10) * 100;
+            int num4 = (rand()%10) * 10;
+            int num5 = (rand()%10) * 1;
+            newPlayer.memberNumber = num1+num2+num3+num4+num5;
+            printf("Your Cadet Reward Number is : %d\n", newPlayer.memberNumber);
+            registerPlayer("namelist.txt", newPlayer);
+            printf("You are all set.\n");
 
         default:
-            printf("Enjoy our casino\n");
+            printf("Enjoy our video poker\n");
             player = newPlayer;
             break;
         }
     }
-    */
-    Player player;
-    player.balance = 2000;
+    
+    //Player player;
+    //player.balance = 2000;
     printf("Pick one of the following options: 1. Player Video Poker 2. Run simulation\n");
     int options = 0;
     scanf("%d", &options);
@@ -175,7 +188,13 @@ int main()
             switch(Again){
                 case 'N':
                     stop = true;
-                    //Save Data
+                    printf("\nUpdating your balance");
+                    for(int i=0; i<5; i++){
+                        printf("*");
+                        sleep(0.0001);
+                    }
+                    updateBalance("namelist.txt",player.balance,&player);
+
                     break;
                 default:
                     break;
