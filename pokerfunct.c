@@ -38,23 +38,23 @@ Card cardChecks(int card)
         temp.value = value + 49;
     }
     int suite = card / 13;
-    if (suite == 0)
+    if (suite == 0) //First 13 cards are Spades
     {
         temp.suite = 'S';
         strcpy(temp.suiteSpellOut, "Spades");
     }
-    else if (suite == 1)
+    else if (suite == 1) //Next 13 cards are Hearts
     {
         temp.suite = 'H';
         strcpy(temp.suiteSpellOut, "Hearts");
     }
-    else if (suite == 2)
+    else if (suite == 2) //Next 13 cards are diamonds
     {
         temp.suite = 'D';
         strcpy(temp.suiteSpellOut, "Diamonds");
     }
     else
-    {
+    { //Last 13 cards are clubs
         temp.suite = 'C';
         strcpy(temp.suiteSpellOut, "Clubs");
     }
@@ -80,8 +80,8 @@ Card *sortCard(Card card1, Card card2, Card card3, Card card4, Card card5)
                 minIndex = i;
             }
         }
-        Sorted[a] = Carrays[minIndex];
-        arrays[minIndex] = 9999;
+        Sorted[a] = Carrays[minIndex]; //Add the card with the minimum value
+        arrays[minIndex] = 9999; //Make the min card that we just added to Sorted become 9999
     }
     return Sorted;
 }
@@ -126,7 +126,7 @@ int checkHand(Card card1, Card card2, Card card3, Card card4, Card card5)
         return collecter; //1 for Flush 2 for straight 3 for straight flush
     }
 
-    //Check for Four of kinds===================
+    //Check for Four of a kind===================
     Card *FourOfKindCheckArray = sortCard(card1, card2, card3, card4, card5);
     int counter = 0;
 
@@ -140,7 +140,7 @@ int checkHand(Card card1, Card card2, Card card3, Card card4, Card card5)
 
     if (counter == 3)
     {
-        return 4; //4 for four of kinds
+        return 4; //4 for four of a kind
     }
     else
     {
@@ -157,7 +157,7 @@ int checkHand(Card card1, Card card2, Card card3, Card card4, Card card5)
 
     if (counter == 3)
     {
-        return 4; //4 for four of kinds
+        return 4; //4 for four of a kind
     }
     else
     {
@@ -326,38 +326,38 @@ int checkPayout(int handRank, int bet)
     switch (handRank)
     {
     case 99:
-        return 251 * bet;
+        return 251 * bet; //payout for RF
         break;
     case 1:
-        return 7 * bet;
+        return 7 * bet; //Payout for flush
         break;
     case 2:
-        return 5 * bet;
+        return 5 * bet; //Payout for straight
         break;
     case 3:
-        return 51 * bet;
+        return 51 * bet; //Payout for SF
         break;
     case 4:
-        return 26 * bet;
+        return 26 * bet; //Payout for Four of a kind
         break;
     case 5:
-        return 10 * bet;
+        return 10 * bet; //Payout for FH
         break;
     case 6:
-        return 4 * bet;
+        return 4 * bet; //Payout for three of a kind
         break;
     case 7:
-        return 0;
+        return 0; //Payout for one pair
         break;
     case 8:
-        return 2 * bet;
+        return 2 * bet; //Payout for two pair
         break;
     case 9:
-        return 1 * bet;
+        return 1 * bet; //Payout for Jack or higher pair
         break;
 
     default:
-        return 0;
+        return 0; //Junk
         break;
     }
 }
@@ -366,7 +366,7 @@ int deal(vector *decks, int *deckSize)
 {
     //random a card
 
-    int card = rand() % *deckSize;
+    int card = rand() % *deckSize; //random a number. We already seed in main
     *deckSize -= 1;
 
     return card;
@@ -374,11 +374,11 @@ int deal(vector *decks, int *deckSize)
 
 Card realDealCard(vector *deck, int *deckSize)
 {
-    int card = deal(deck, deckSize);
-    int test = *vector_at(deck, card);
-    vector_erase(deck, card);
+    int card = deal(deck, deckSize); //Randomly pick a card
+    int test = *vector_at(deck, card); //Indentify the card's code
+    vector_erase(deck, card); //Get rid of the card
     //printf("Test deal: %d\n", test);
-    Card tester = cardChecks(test);
+    Card tester = cardChecks(test); //Turn the card code into an actual card
     //printf("Card: %c %c \n", tester.value, tester.suite);
     return tester;
 }
@@ -389,9 +389,11 @@ bool CheckRecord(char filename[], int MemberNumber, Player* playerJ){
     //Player playerJ;
     bool stop = false;
     while(!feof(fp) && !stop){
+        //Scan data and automatically put it into playerJ
         fscanf(fp,"%d,%[^,],%d,%d,%d",&playerJ->memberNumber,playerJ->names, &playerJ->age, &playerJ->balance, &playerJ->points);
+        
         if(playerJ->memberNumber == MemberNumber){
-            stop = true;
+            stop = true; //If we found the desired player, stop the loop 
             return true;
         }
     }
@@ -406,7 +408,7 @@ bool CheckRecord(char filename[], int MemberNumber, Player* playerJ){
 void registerPlayer(char filename[], Player player){
     FILE* fp = fopen(filename, "a");
     //Format MemberNumber,Name,Age,Balance,Points
-    
+    //Add a new player to the database
     fprintf(fp,"%5d,%s,%d,%d,%d\n", player.memberNumber, player.names, player.age, player.balance, player.points);
 
     
@@ -415,7 +417,7 @@ void registerPlayer(char filename[], Player player){
 
 void updateBalance(char filename[], int newBalance, Player* player){
     FILE* fp = fopen(filename, "r+");
-    player ->balance = newBalance;
+    player ->balance = newBalance; //Update player's balance
     Player* playerJ = (Player*)malloc(sizeof(Player));
     bool stop = false;
     int index = 0;
@@ -429,10 +431,11 @@ void updateBalance(char filename[], int newBalance, Player* player){
         }
     }
     fseek(fp,0,SEEK_SET);
-    Player trash;
+    Player trash; //Use trash to collect data that we do not need
     for(int i=0; i<index; i++){
     fscanf(fp,"%d,%[^,],%d,%d,%d\n",&trash.memberNumber,trash.names, &trash.age, &trash.balance, &trash.points);
-    }
+    } 
+    //Overwrite the existing data with a new balance
     fprintf(fp,"%5d,%s,%d,%d,%d\n", player->memberNumber,player->names, player->age, player->balance, player->points);
 
     
@@ -450,7 +453,7 @@ void RunSim(int handRank, vector* deck, int deckSize, int turnPlayed)
         cards[i] = realDealCard(deck, &deckSize);
     }
     printf("Hand %d: %c %s, %c %s, %c %s, %c %s, %c %s\n", turnPlayed, cards[0].value, cards[0].suiteSpellOut, cards[1].value, cards[1].suiteSpellOut, cards[2].value, cards[2].suiteSpellOut, cards[3].value, cards[3].suiteSpellOut, cards[4].value, cards[4].suiteSpellOut);
-    if(handRank == checkHand(cards[0], cards[1], cards[2], cards[3], cards[4])) //base case
+    if(handRank == checkHand(cards[0], cards[1], cards[2], cards[3], cards[4])) //base case: we got the hand that we want
     {
         printf("It takes %d rounds to get a ", turnPlayed);
         printHandRank(handRank);
@@ -463,7 +466,7 @@ void RunSim(int handRank, vector* deck, int deckSize, int turnPlayed)
             vector_insert(deck, i, i);
             //printf("%d\n", *vector_at(&deck,i));
         }
-        RunSim(handRank,deck,deckSize,turnPlayed+1);
+        RunSim(handRank,deck,deckSize,turnPlayed+1); //Recursively run with incrementing turnedPlayed
     }
 }
 

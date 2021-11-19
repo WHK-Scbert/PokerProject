@@ -108,6 +108,7 @@ int main()
             scanf("%d", &newPlayer.age);
             printf("How much money you want to buy in: ");
             scanf("%d", &newPlayer.balance);
+            //Randomly generate 5 digits membership number
             int num1 = (rand() % 10) * 10000;
             int num2 = (rand() % 10) * 1000;
             int num3 = (rand() % 10) * 100;
