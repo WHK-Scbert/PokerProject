@@ -167,10 +167,21 @@ int main()
                 //cards[i] = cardChecks(dealingCard);
                 cards[i] = realDealCard(&deck, &deckSize);
             }
-            printf("Place your bet: ");
+            bool valid = true;
             int bet;
+            while(valid){
+            printf("Place your bet: ");
+            
             scanf("%d", &bet);
+            if(player.balance >= bet){
             player.balance -= bet;
+            valid = false;
+            }else{
+                printf("\nYou do not have enough money...\n");
+            }
+            
+            }
+
             printf("Your hand: %c %s, %c %s, %c %s, %c %s, %c %s\n", cards[0].value, cards[0].suiteSpellOut, cards[1].value, cards[1].suiteSpellOut, cards[2].value, cards[2].suiteSpellOut, cards[3].value, cards[3].suiteSpellOut, cards[4].value, cards[4].suiteSpellOut);
             printf("How many cards you want to change: ");
             int numChange = 0;
@@ -198,11 +209,11 @@ int main()
             {
             case 'N':
                 stop = true;
-                printf("\nUpdating your balance");
-                for (int i = 0; i < 5; i++)
+                printf("\nUpdating your balance\n");
+                for (int i = 0; i < 10; i++)
                 {
                     printf("*");
-                    sleep(0.0001);
+                    sleep(0.01);
                 }
                 printf("\n");
                 updateBalance("namelist.txt", player.balance, &player);
