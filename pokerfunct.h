@@ -31,6 +31,16 @@ typedef struct
     int trueValue;
 }Card;
 
+typedef struct 
+{
+    int memberNumber;
+    char names[20];
+    int age;
+    int balance;
+    int points;
+
+}Player;
+
 /** ----------------------------------------------------------
  * cardChecks() - convert card code to an actual card
  * @param card is an integer refering to a card code
@@ -64,16 +74,6 @@ int deal(vector* decks, int* deckSize);
  * ----------------------------------------------------------
  */
 Card realDealCard(vector *deck, int *deckSize); //Deal and get rid of the dealt card from the deck
-typedef struct 
-{
-    int memberNumber;
-    char names[20];
-    int age;
-    int balance;
-    int points;
-
-}Player;
-
 
 /** ----------------------------------------------------------
  * sortCard() - sort cards in numeric values
