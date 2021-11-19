@@ -76,7 +76,7 @@ int main()
         //printf("%d\n", *vector_at(&deck,i));
     }
 
-    printf("*****Welcome to USAFA Video Poker*****\n");
+    printf("*****Welcome to USAFA Video Poker at Mallanoo Casino*****\n");
     printf("Please Enter Your Cadet Reward Number: \n");
     int memberNumber = 0;
     Player newPlayer;
@@ -128,7 +128,8 @@ int main()
 
     //Player player;
     //player.balance = 2000;
-    printf("Pick one of the following options: 1. Player Video Poker 2. Run simulation\n");
+    do{
+    printf("\nPick one of the following options: 1. Player Video Poker 2. Run simulation 0. Exit\n");
     int options = 0;
     scanf("%d", &options);
     if (options == 1)
@@ -233,7 +234,11 @@ int main()
         int handRank = 0;
         scanf("%d", &handRank);
         RunSim(handRank, &deck, deckSize, 1);
+    }else{
+        printf("\nThank you for playing Video Poker at Mallanoo Casino.\n");
+        exit(1);
     }
+    }while(true); //The only way to exit the loop is choosing to exit
 
     //Test deal
 

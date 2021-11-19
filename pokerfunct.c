@@ -470,6 +470,8 @@ void RunSim(int handRank, vector* deck, int deckSize, int turnPlayed)
     }
 }
 
+
+//For comments for vectors, refer to CS210 Abstract Data type lesson
 void vector_create(vector *v, unsigned int vectorSize)
 {
     int i;
